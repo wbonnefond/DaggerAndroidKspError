@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     alias(libs.plugins.kotlinKsp)
+    // id("kotlin-kapt")
 }
 
 android {
@@ -36,12 +37,15 @@ android {
 dependencies {
     implementation(project(":mylibrary"))
 
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
     implementation(libs.daggerAndroid)
     implementation(libs.daggerAndroidSupport)
     ksp(libs.daggerAndroidProcessor)
     ksp(libs.daggerCompiler)
+    // kapt(libs.daggerAndroidProcessor)
+    // kapt(libs.daggerCompiler)
+
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.appcompat)
     implementation(libs.material)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
