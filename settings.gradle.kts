@@ -21,4 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "DaggerAndroid"
 include(":app")
- 
+include(":mylibrary")

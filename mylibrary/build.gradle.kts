@@ -1,21 +1,18 @@
 plugins {
-    alias(libs.plugins.androidApplication)
+    alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     alias(libs.plugins.kotlinKsp)
 }
 
 android {
-    namespace = "com.example.daggerandroid"
+    namespace = "com.example.mylibrary"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.daggerandroid"
         minSdk = 24
-        targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
@@ -34,7 +31,6 @@ android {
 }
 
 dependencies {
-    implementation(project(":mylibrary"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

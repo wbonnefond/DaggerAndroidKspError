@@ -1,16 +1,15 @@
 package com.example.daggerandroid
 
 import dagger.Module
-import dagger.Provides
+import com.example.mylibrary.LibraryModule
+import dagger.android.ContributesAndroidInjector
 
 @Module
-class ExampleModule {
+abstract class ExampleModule {
 
     /**
      * If this method is marked `internal` then the generated code will fail to compile using KSP.
      */
-    @Provides
-    internal fun provideString(): String {
-        return "Hello World!"
-    }
+    @ContributesAndroidInjector(modules = [LibraryModule::class])
+    internal abstract fun contributeAppClass(): AppClass
 }
