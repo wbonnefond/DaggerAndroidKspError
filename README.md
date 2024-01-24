@@ -1,26 +1,13 @@
-### Minimum reproducible project for dagger-android KSP build error
+### Minimum reproducible project for KSP failure with kotlin 1.9.21 and KSP hanging with kotlin 1.9.22
 
-dagger-android using KSP fails to build when a `@ContributesAndroidInjector` references a dagger module with an 
-`internal` `@ContributesAndroidInjector` method from another gradle module. This same code compiles successfully using 
-KAPT.
 
-```agsl
-e: [ksp] ComponentProcessingStep was unable to process 'com.example.daggerandroid.ExampleModule_ContributeAppClass$app_debug.AppClassSubcomponent' because '<error>' could not be resolved.
+I have attempted to use KSP `1.9.22-1.0.17` which addresses this issue: https://github.com/google/ksp/issues/1671. 
+Unfortunately, the KSP task hangs indefinitely when using kotlin `1.9.22` and KSP `1.9.22-1.0.17`. This does not occur 
+with `1.9.21`
 
-Dependency trace:
-    => element (CLASS): com.example.mylibrary.LibraryModule_ContributeLibraryClass$mylibrary_debug
-    => annotation type: dagger.Module
-    => annotation: @dagger.Module(includes={}, subcomponents={<error>})
-    => annotation value (TYPE_ARRAY): subcomponents={<error>}
-    => annotation value (TYPE): subcomponents=<error>
-
-If type '<error>' is a generated type, check above for compilation errors that may have prevented the type from being generated. Otherwise, ensure that type '<error>' is on your classpath.
-e: Error occurred in KSP, check log for detail
-
-```
 
 To reproduce: 
 
-* run `./gradlew  :app:assembleDebug` and note the build fails
-* comment out KSP usages in both `app` and `mylibrary` modules and uncomment KAPT usages
-* run `./gradlew  :app:assembleDebug` and note the build succeeds
+* run `./gradlew  :app:assembleDebug --rerun-tasks` and note that it never completes
+* downgrade versions in /gradle/libs.versions.toml: kotlin to 1.9.21, ksp to 1.9.21-1.0.16
+* run `./gradlew  :app:assembleDebug --rerun-tasks` and note that it fails due to the above issue
